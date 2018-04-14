@@ -23,6 +23,22 @@ public class Rocket : MonoBehaviour {
 		Rotate(); //Invoca a função que processa entradas Esq e Dir
 	}
 
+    void OnCollisionEnter(Collision collision) {
+        switch (collision.gameObject.tag){
+            case "Friendly":
+                print("Okay.");
+                break;
+            
+            case "Unfriendly":
+                print("Dead!");
+                break;
+
+            case "Fuel":
+                print("Fuelled Up!");
+                break;
+        }
+    }
+
 	private void Thrust()
     {
         float mainThisFrame = mThrust * Time.deltaTime; //normaliza a aceleração com base nos frames

@@ -9,6 +9,9 @@ public class Rocket : MonoBehaviour {
 	
 	AudioSource audiosource; // Cria uma variável global do tipo AudioSource
 	
+    [SerializeField]float rThrust; //Cria um campo float editavel dentro do unity (Giro)
+    
+    [SerializeField]float mThrust; //Cria um campo float editavel dentro do unity (Aceleração)
 	void Start () {
 		rigidbody = GetComponent<Rigidbody>(); //Age apenas em componentes do tipo Rigidbody
 		audiosource = GetComponent<AudioSource>(); //Age apenas em compentes do tipo AudioSource
@@ -22,9 +25,11 @@ public class Rocket : MonoBehaviour {
 
 	private void Thrust()
     {
-        if (Input.GetKey(KeyCode.Space))
+        float mainThisFrame = mThrust * Time.deltaTime; //normaliza a aceleração com base nos frames
+
+        if (Input.GetKey(KeyCode.UpArrow))
         { //se a tecla está pressionada
-            rigidbody.AddRelativeForce(Vector3.up); //Gera uma força relativa ao objeto
+            rigidbody.AddRelativeForce(Vector3.up * mainThisFrame); //Gera uma força relativa ao objeto
             print("Propulsion");
             if (!audiosource.isPlaying) //Se audio não estiver tocando
             {
@@ -42,14 +47,16 @@ public class Rocket : MonoBehaviour {
         
 		rigidbody.freezeRotation = true; //Controle manual de rotação 
         
+        float rotationThisFrame = rThrust * Time.deltaTime; //normaliza a aceleração com base nos frames
+
 		if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Rotate(Vector3.forward); //Força na direção positiva de Z (Regra de fluxo da mão esquerda)
+            transform.Rotate(Vector3.forward * rotationThisFrame); //Força na direção positiva de Z (Regra de fluxo da mão esquerda)
             print("Left");
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Rotate(Vector3.back);
+            transform.Rotate(Vector3.back * rotationThisFrame);
             print("Right");
         }
 

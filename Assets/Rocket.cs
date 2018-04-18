@@ -6,6 +6,12 @@ public class Rocket : MonoBehaviour {
 	AudioSource audiosource; // Cria uma variável global do tipo AudioSource
     [SerializeField]float rThrust; //Cria um campo float editavel dentro do unity (Giro)
     [SerializeField]float mThrust; //Cria um campo float editavel dentro do unity (Aceleração)
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip death;
+    [SerializeField] AudioClip levelFinish;
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] ParticleSystem levelFinishParticles;
 
     enum State {Alive, Dying, Transcending};
     State state = State.Alive;
@@ -17,8 +23,10 @@ public class Rocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Thrust(); //Invoca a função que processa a entrada Espaço
-		Rotate(); //Invoca a função que processa entradas Esq e Dir
+		if (state == State.Alive){
+            RespondToThrust(); //Invoca a função que processa a entrada Espaço
+		    RespondToRotate(); //Invoca a função que processa entradas Esq e Dir
+        }
 	}
 
     void OnCollisionEnter(Collision collision) {
@@ -32,42 +40,64 @@ public class Rocket : MonoBehaviour {
                 break;
 
             case "Finish":
-                print("Level Finished!");
-                state = State.Transcending;
-                Invoke("LoadNextScene",1f); //Carrega a proxima fase após 1 segundo
+                FinishSequence();
                 break;
 
             default:
-                print("Dead!");
-                state = State.Dying;
-                Invoke("LoadFirstLevel",1f);
+                DeathSequence();
                 break;
         }
     }
 
-    
+    private void DeathSequence()
+    {
+        print("Dead!");
+        audiosource.Stop();
+        audiosource.PlayOneShot(death);
+        deathParticles.Play();
+        state = State.Dying;
+        Invoke("LoadFirstLevel", 1f);
+    }
 
-    private void Thrust()
+    private void FinishSequence()
+    {
+        print("Level Finished!");
+        audiosource.Stop();
+        audiosource.PlayOneShot(levelFinish);
+        levelFinishParticles.Play();
+        state = State.Transcending;
+        Invoke("LoadNextScene", 1f); //Carrega a proxima fase após 1 segundo
+    }
+
+
+    private void RespondToThrust()
     {
         float mainThisFrame = mThrust * Time.deltaTime; //normaliza a aceleração com base nos frames
 
-        if (Input.GetKey(KeyCode.UpArrow) && state == State.Alive)
-        { //se a tecla está pressionada
-            rigidbody.AddRelativeForce(Vector3.up * mainThisFrame); //Gera uma força relativa ao objeto
-            print("Propulsion");
-            if (!audiosource.isPlaying) //Se audio não estiver tocando
-            {
-                audiosource.Play(); //Tocar audio
-            }
+        if (Input.GetKey(KeyCode.UpArrow))
+        { //se a tecla está pressionada e a nave está viva
+            ApplyThrust(mainThisFrame);
         }
         else // Se espaço não estiver pressionado
         {
             audiosource.Stop(); //Parar audio
+            mainEngineParticles.Stop();
         }
 
     }
 
-    private void Rotate()
+    private void ApplyThrust(float mainThisFrame)
+    {
+        rigidbody.AddRelativeForce(Vector3.up * mainThisFrame); //Gera uma força relativa ao objeto
+        print("Propulsion");
+        if (!audiosource.isPlaying) //Se audio não estiver tocando
+        {
+            audiosource.PlayOneShot(mainEngine); //Tocar audio
+        }
+        mainEngineParticles.Play();
+    }
+
+    private void RespondToRotate()
     {
         if(state == State.Alive) {
             rigidbody.freezeRotation = true; //Controle manual de rotação 

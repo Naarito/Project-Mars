@@ -4,15 +4,16 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
 	Rigidbody rigidbody; //Cria uma variável global do tipo Rigidbody
 	AudioSource audiosource; // Cria uma variável global do tipo AudioSource
-    [SerializeField]float rThrust; //Cria um campo float editavel dentro do unity (Giro)
-    [SerializeField]float mThrust; //Cria um campo float editavel dentro do unity (Aceleração)
+    [SerializeField] float rThrust; //Cria um campo float editavel dentro do unity (Giro)
+    [SerializeField] float mThrust; //Cria um campo float editavel dentro do unity (Aceleração)
+    [SerializeField] float levelLoadDelay = 1.5f; //Delay para iniciar proxima fase
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip death;
     [SerializeField] AudioClip levelFinish;
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem levelFinishParticles;
-
+    
     enum State {Alive, Dying, Transcending};
     State state = State.Alive;
 
@@ -56,7 +57,7 @@ public class Rocket : MonoBehaviour {
         audiosource.PlayOneShot(death);
         deathParticles.Play();
         state = State.Dying;
-        Invoke("LoadFirstLevel", 1f);
+        Invoke("LoadFirstLevel", levelLoadDelay);
     }
 
     private void FinishSequence()
@@ -66,7 +67,7 @@ public class Rocket : MonoBehaviour {
         audiosource.PlayOneShot(levelFinish);
         levelFinishParticles.Play();
         state = State.Transcending;
-        Invoke("LoadNextScene", 1f); //Carrega a proxima fase após 1 segundo
+        Invoke("LoadNextScene", levelLoadDelay); //Carrega a proxima fase após 1 segundo
     }
 
 

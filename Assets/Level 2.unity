@@ -211,6 +211,38 @@ Prefab:
       propertyPath: m_Name
       value: Cave
       objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.96874136
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.06545206
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.23827656
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.021922257
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.646
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 172.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4846775754401732, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 152.31801
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756392085243868, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -31.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 08d3e599d962c2f4fa866449ff925fce, type: 2}
   m_IsPrefabParent: 0

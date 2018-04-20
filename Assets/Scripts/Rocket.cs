@@ -64,6 +64,7 @@ public class Rocket : MonoBehaviour {
     {
         print("Level Finished!");
         audiosource.Stop();
+        mainEngineParticles.Stop();
         audiosource.PlayOneShot(levelFinish);
         levelFinishParticles.Play();
         state = State.Transcending;

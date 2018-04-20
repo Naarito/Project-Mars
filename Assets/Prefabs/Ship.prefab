@@ -1081,6 +1081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rThrust: 200
   mThrust: 1000
+  levelLoadDelay: 1.5
   mainEngine: {fileID: 8300000, guid: 9b174f3340b8b46459d9591a7f68c763, type: 3}
   death: {fileID: 8300000, guid: 632efcbe440a152439216cc877c7fade, type: 3}
   levelFinish: {fileID: 8300000, guid: 0622152b2a74151459f321cc9d5bf3f1, type: 3}

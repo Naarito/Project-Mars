@@ -1783,9 +1783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d92e238e2599c43a318e5f8783c851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementVector: {x: -11.5, y: -12, z: 0}
-  period: 4
-  movementFactor: 0
 --- !u!114 &114305331955629038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1797,6 +1794,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e87cae13d07e845992b4f55b91b75f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementVector: {x: -9, y: -14, z: 0}
-  period: 4
-  movementFactor: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour {
@@ -17,6 +18,8 @@ public class Rocket : MonoBehaviour {
     enum State {Alive, Dying, Transcending};
     State state = State.Alive;
 
+    bool collisionsEnable = true;
+
 	void Start () {
 		rigidbody = GetComponent<Rigidbody>(); //Age apenas em componentes do tipo Rigidbody
 		audiosource = GetComponent<AudioSource>(); //Age apenas em compentes do tipo AudioSource
@@ -27,13 +30,25 @@ public class Rocket : MonoBehaviour {
 		if (state == State.Alive){
             RespondToThrust(); //Invoca a função que processa a entrada Espaço
 		    RespondToRotate(); //Invoca a função que processa entradas Esq e Dir
+            if(Debug.isDebugBuild){
+                RespondToDebugKeys(); //Invoca a função que processa as entradas L e C
+            }
         }
 	}
 
+    private void RespondToDebugKeys()
+    {
+       if (Input.GetKey(KeyCode.L)){
+            LoadNextScene(); //Carrega imediatamente a proxima fase
+        }else if (Input.GetKey(KeyCode.C)) {
+            collisionsEnable = !collisionsEnable; //Faz a troca automática de estado a cada acesso
+        }
+    }
+
     void OnCollisionEnter(Collision collision) {
         
-        if(state != State.Alive)
-            return; //Só computa colisões se estiver vivo
+        if(state != State.Alive || !collisionsEnable) //Só permite computar colisões se estiver vivo ou as colisões estiverem ativadas
+            return;
 
         switch (collision.gameObject.tag){
             case "Friendly":
